@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:srcCompat="@drawable/hello"
+        android:id="@+id/article_brand" />
+    <TextView
+        android:id="@+id/article_comment"
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="2016/11/15 | 0 评论"
+        android:typeface="serif"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="13dp"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/article_title"
+        tools:text="Article Tiltles"
+        android:typeface="serif"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="18dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/article_desc"
+        tools:text="this is a  story !! bad story.... do you want fack me !!!"
+        android:typeface="serif"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="13dp"/>
+</LinearLayout>

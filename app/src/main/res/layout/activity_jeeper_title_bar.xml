@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_jeeper_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/main_title_bg"
+        tools:context="cn.jeeper41.jeeper.wiget.JeeperTitleBar">
+        <!-- Title -->
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:text="@string/bar_title"
+            android:textColor="#ffffffff"
+            android:textSize="20sp"></TextView>
+
+        <Button
+            android:id="@+id/bar_btn_backward"
+            android:layout_width="60sp"
+            android:layout_height="match_parent"
+            android:background="@drawable/btton__style"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/bar_backward"
+            android:textColor="#ffffffff"
+            android:textSize="13dp" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</LinearLayout>

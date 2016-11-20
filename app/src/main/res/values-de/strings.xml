@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">myJeep41</string>
+	<string name="action_settings">Einstellungen</string>
+	<string name="title_activity_main">myJeep41 Blog</string>
+	<string name="bar_backward">Zurück</string>
+	<string name="bar_title">myJeep41</string>
+	<string name="STATE_REFRESHING">Wird aktualisiert&#8230;</string>
+	<string name="STATE_PULL_REFRESH">Ziehen zum neu laden</string>
+	<string name="STATE_RELEASE_REFRESH">Los lassen, um neu zu laden</string>
+	<string name="STATE_LOAD_MORE">Laden mehr&#8230;</string>
+	<string name="LAST_REFRESH_TIME">Letzte Aktualisierungszeit:</string>
+	<string name="NO_DATA">Keine Daten mehr</string>
+	<string name="LOGIN_OR_REGISTER">Einloggen/Registieren</string>
+	<string name="MENU_ABOUT">Über uns</string>
+	<string name="CURRENT_VERSION">Aktuelle Version:</string>
+	<string name="navigation_drawer_open">Offene Navigation Schublade</string>
+	<string name="navigation_drawer_close">Enge Navigation Schublade</string>
+
+</resources>
