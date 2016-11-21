@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     private RefreshListView articleView = null;
     private Context context = this;
     private List<Article> articleList = new ArrayList<Article>();
-    private Integer currPageIndex = 0;
+    private Integer currPageIndex = 1;
     private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         articleView.setOnRefreashListener(new RefreshListView.OnRefreashListener() {
             @Override
             public void onRefreash() {
-                currPageIndex = 0;
+                currPageIndex = 1;
                 loadMoreData(currPageIndex.toString());
             }
 
