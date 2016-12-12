@@ -34,6 +34,8 @@
             android:name=".wiget.JeeperTitleBar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".about.AboutUsActivity"></activity>
+
+        <activity android:name=".LoginActivity" android:theme="@style/MyPopupStyle"></activity>
     </application>
 
 </manifest>

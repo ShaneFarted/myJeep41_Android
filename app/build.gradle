@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('C:/androidCertification.jks')
+            keyAlias 'qianmingZhengshu'
+            keyPassword 'qianming666'
+            storePassword 'qianming666'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
     defaultConfig {
