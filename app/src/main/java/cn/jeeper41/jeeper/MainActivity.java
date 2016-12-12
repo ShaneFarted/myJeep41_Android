@@ -57,8 +57,9 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+//边栏选项监听器
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 //点击头像弹出登录框
         View headerView = navigationView.getHeaderView(0);
         ImageView Login = (ImageView) headerView.findViewById(R.id.ivPortrait);
