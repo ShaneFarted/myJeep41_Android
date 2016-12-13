@@ -59,7 +59,8 @@
                 android:id="@+id/etUsername"
                 android:layout_weight="1"
                 android:hint="Input your username"
-                android:fontFamily="sans-serif-smallcaps" />
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="#ffffffff" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -69,7 +70,8 @@
                 android:id="@+id/etPassword"
                 android:layout_weight="1"
                 android:hint="Input your password"
-                android:fontFamily="sans-serif-smallcaps" />
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="#ffffffff" />
         </LinearLayout>
 
         <LinearLayout
