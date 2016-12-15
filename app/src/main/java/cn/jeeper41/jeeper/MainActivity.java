@@ -189,6 +189,12 @@ public class MainActivity extends AppCompatActivity
             intent.setClass(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.nav_forum) {
+            // Handle the camera action
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, ForumActivity.class);
+            startActivity(intent);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

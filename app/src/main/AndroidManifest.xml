@@ -36,6 +36,8 @@
         <activity android:name=".about.AboutUsActivity"></activity>
 
         <activity android:name=".LoginActivity" android:theme="@style/MyPopupStyle"></activity>
+
+        <activity android:name=".ForumActivity"></activity>
     </application>
 
 </manifest>
