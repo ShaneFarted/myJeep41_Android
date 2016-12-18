@@ -38,7 +38,8 @@
 
         <activity android:name=".LoginActivity" android:theme="@style/MyPopupStyle"></activity>
 
-        <activity android:name=".ForumActivity"></activity>
+        <activity android:name=".forum.ForumActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".forum.SubForumActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

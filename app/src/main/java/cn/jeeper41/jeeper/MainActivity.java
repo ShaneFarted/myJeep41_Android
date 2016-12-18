@@ -26,6 +26,7 @@ import cn.jeeper41.jeeper.about.AboutUsActivity;
 import cn.jeeper41.jeeper.blog.ArticleDetailActivity;
 import cn.jeeper41.jeeper.entity.Article;
 import cn.jeeper41.jeeper.entity.UserApplication;
+import cn.jeeper41.jeeper.forum.ForumActivity;
 import cn.jeeper41.jeeper.service.ArticleCallBack;
 import cn.jeeper41.jeeper.service.ArticleService;
 import cn.jeeper41.jeeper.wiget.RefreshListView;

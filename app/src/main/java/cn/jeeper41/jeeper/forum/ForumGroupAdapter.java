@@ -1,4 +1,4 @@
-package cn.jeeper41.jeeper;
+package cn.jeeper41.jeeper.forum;
 
 /**
  * Created by Shane on 2016-12-14.
