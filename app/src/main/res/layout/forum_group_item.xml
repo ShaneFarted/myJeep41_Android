@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <ImageView
+        android:id="@+id/ivForumIcon"
+        android:src="@drawable/hello"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
     <TextView
         android:id="@+id/tvForumgroupId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textSize="24sp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:text="板块一"
+        android:fontFamily="sans-serif" />
 
-    <TextView
+<!--    <TextView
         android:id="@+id/tvForumgroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="18sp" />-->
 
-    <TextView
+<!--    <TextView
         android:id="@+id/tvForumId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:textSize="16sp" />
+        android:textSize="16sp" />-->
 
 </LinearLayout>
