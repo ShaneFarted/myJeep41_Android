@@ -2,6 +2,7 @@ package cn.jeeper41.jeeper;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,13 +17,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import cn.jeeper41.jeeper.config.Global;
+import cn.jeeper41.jeeper.entity.User;
+import cn.jeeper41.jeeper.entity.UserApplication;
 import cn.jeeper41.jeeper.service.RequestHandler;
 
 public class LoginActivity extends Activity implements OnClickListener{
-
+    private UserApplication Userapp;
     private Button btn_login;
     private LinearLayout layout;
 
@@ -84,6 +91,8 @@ public class LoginActivity extends Activity implements OnClickListener{
                 super.onPostExecute(s);
                 loading.dismiss();
                 Toast.makeText(LoginActivity.this,s,Toast.LENGTH_LONG).show();
+                saveLogin(s);//退出后就没了
+                finish();
             }
 
             @Override
@@ -98,6 +107,29 @@ public class LoginActivity extends Activity implements OnClickListener{
         }
         Testconn test=new Testconn();
         test.execute();
+    }
+
+    private void saveLogin(String JSON){
+        JSONObject jsonObject = null;
+        try{
+            jsonObject = new JSONObject(JSON);
+            JSONArray result = jsonObject.getJSONArray("result");
+            JSONObject jo = result.getJSONObject(0);
+            //SharedPreferences sp = getSharedPreferences("userprofile", Context.MODE_PRIVATE);
+            //SharedPreferences.Editor editor = sp.edit();
+            //把数据进行保存
+            //如果选择了记住我则写入
+            //editor.putString("saveduserid", jo.getString("userid"));
+            //提交数据
+            //editor.commit();
+            User us=new User(jo.getString("userid"),jo.getString("displayname"));
+            Userapp=(UserApplication) getApplication();
+            Userapp.setUser(us);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

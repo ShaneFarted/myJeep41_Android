@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.List;
 import cn.jeeper41.jeeper.about.AboutUsActivity;
 import cn.jeeper41.jeeper.blog.ArticleDetailActivity;
 import cn.jeeper41.jeeper.entity.Article;
+import cn.jeeper41.jeeper.entity.UserApplication;
 import cn.jeeper41.jeeper.service.ArticleCallBack;
 import cn.jeeper41.jeeper.service.ArticleService;
 import cn.jeeper41.jeeper.wiget.RefreshListView;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private List<Article> articleList = new ArrayList<Article>();
     private Integer currPageIndex = 1;
     private Handler handler;
+    private UserApplication Userapp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +127,15 @@ public class MainActivity extends AppCompatActivity
         articleView.refresh();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Userapp=(UserApplication)getApplication();
+        TextView textView = (TextView)findViewById(R.id.tvCurrentUsername);
+        if(Userapp.getUser().getUserid().length()>0){
+            textView.setText(Userapp.getUser().getDisplayname().toString());
+        }
+    }
     /**
      * laod more data
      * @param pageIndex

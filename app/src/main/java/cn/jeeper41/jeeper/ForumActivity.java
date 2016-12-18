@@ -9,14 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,15 +83,30 @@ public class ForumActivity extends AppCompatActivity implements ListView.OnItemC
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray("result");
 
+            //添加板块分类及其子版块
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
                 String id = jo.getString("groupid");
                 String name = jo.getString("groupname");
-
                 HashMap<String,String> forumgroupmap = new HashMap<>();
                 forumgroupmap.put("groupid",id);
                 forumgroupmap.put("groupname",name);
+                forumgroupmap.put("forumid","");
+                forumgroupmap.put("forumname","");
                 list.add(forumgroupmap);
+                //添加子版块
+                JSONArray resultt=jo.getJSONArray("subforum");
+                for(int j=0;j<resultt.length();j++) {
+                    HashMap<String,String> forummap = new HashMap<>();
+                    JSONObject joo = resultt.getJSONObject(j);
+                    String forumid=joo.getString("forumid");
+                    String forumname=joo.getString("forumname");
+                    forummap.put("groupid","");
+                    forummap.put("groupname","");
+                    forummap.put("forumid",forumid);
+                    forummap.put("forumname",forumname);
+                    list.add(forummap);
+                }
             }
 
         } catch (JSONException e) {
@@ -97,18 +115,24 @@ public class ForumActivity extends AppCompatActivity implements ListView.OnItemC
 
         ListAdapter adapter = new SimpleAdapter(
                 ForumActivity.this, list, R.layout.forum_group_item,
-                new String[]{"groupid","groupname"},
-                new int[]{R.id.tvForumId, R.id.tvForumName});
+                new String[]{"groupid","groupname","forumid","forumname"},
+                new int[]{R.id.tvForumgroupId, R.id.tvForumgroupName,R.id.tvForumId,R.id.tvForumName});
 
         listView.setAdapter(adapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, MainActivity.class);  //应该为具体板块内的activity
-        HashMap<String, String> map = (HashMap) parent.getItemAtPosition(position);
-        String empId = map.get("groupid").toString();
-        intent.putExtra("forum_id", empId);
-        startActivity(intent);
+        TextView textView = (TextView)view.findViewById(R.id.tvForumgroupId);
+        if(textView.getText()==null||textView.getText().length()<=0) {
+            Intent intent = new Intent(this, ChoosepostActivity.class);
+            HashMap<String, String> map = (HashMap) parent.getItemAtPosition(position);
+            String forumid = map.get("forumid").toString();
+
+            Toast.makeText(getApplicationContext(), "forum id:"+forumid,
+                    Toast.LENGTH_SHORT).show();
+            //intent.putExtra("forum_id", forumid);
+            //startActivity(intent);
+        }
     }
 }
