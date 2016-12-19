@@ -52,6 +52,7 @@ public class SubForumActivity extends JeeperTitleBar {
                     Intent intent = new Intent();
                     intent.setClass(SubForumActivity.this, PostListActivity.class);
                     intent.putExtra("forumId",jsonObject.getString("forumid"));
+                    intent.putExtra("forumName",jsonObject.getString("forumname"));
                     startActivity(intent);
                    // Toast.makeText(getApplicationContext(),jsonObject.getString("forumid"),
                    //         Toast.LENGTH_SHORT).show();

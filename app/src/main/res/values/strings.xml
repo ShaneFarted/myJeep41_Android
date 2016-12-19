@@ -20,6 +20,8 @@
 
     <!-- menu -->
     <string name="MENU_ABOUT">关于</string>
+    <!-- login -->
+    <string name="LOGIN_INVALID">用户名/密码信息无效！</string>
 
     <!-- about us-->
     <string name="CURRENT_VERSION">当前版本：</string>

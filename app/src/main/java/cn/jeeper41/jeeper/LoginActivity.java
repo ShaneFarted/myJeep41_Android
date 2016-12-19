@@ -64,7 +64,11 @@ public class LoginActivity extends Activity implements OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnLogin:
-                loginAuthentication();
+                if(isValid()){
+                    loginAuthentication();
+                }
+                else
+                    Toast.makeText(this,getString(R.string.LOGIN_INVALID),Toast.LENGTH_SHORT).show();
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 break;
@@ -72,6 +76,15 @@ public class LoginActivity extends Activity implements OnClickListener{
                 break;
         }
         //finish();
+    }
+    //用户名密码非空
+    private boolean isValid(){
+        final String usn=((EditText)findViewById(R.id.etUsername)).getText().toString();
+        final String psw=((EditText)findViewById(R.id.etPassword)).getText().toString();
+        if(usn==null||psw==null||usn.length()<=0||psw.length()<=0)
+            return false;
+        else
+            return true;
     }
 //数据库连接，并显示等待
     private void loginAuthentication(){
@@ -90,8 +103,8 @@ public class LoginActivity extends Activity implements OnClickListener{
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                saveLogin(s);//退出后就没了
-                finish();
+                if(saveLogin(s)) //退出后就没了
+                    finish();
             }
 
             @Override
@@ -108,7 +121,7 @@ public class LoginActivity extends Activity implements OnClickListener{
         test.execute();
     }
 
-    private void saveLogin(String JSON){
+    private boolean saveLogin(String JSON){
         JSONObject jsonObject = null;
         try{
             jsonObject = new JSONObject(JSON);
@@ -125,9 +138,12 @@ public class LoginActivity extends Activity implements OnClickListener{
             Toast.makeText(LoginActivity.this,"Willkommen "+us.getDisplayname(),Toast.LENGTH_LONG).show();
             Userapp=(UserApplication) getApplication();
             Userapp.setUser(us);
+            return true;
         }
         catch (JSONException e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(),getString(R.string.LOGIN_INVALID),Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }

@@ -7,6 +7,7 @@ package cn.jeeper41.jeeper.forum;
         import android.os.Message;
         import android.view.View;
         import android.widget.AdapterView;
+        import android.widget.TextView;
         import android.widget.Toast;
 
         import org.json.JSONArray;
@@ -41,6 +42,8 @@ public class PostListActivity extends JeeperTitleBar {
         setTitle("");
         // 获取参数
         forumId = getIntent().getStringExtra("forumId");
+        TextView tvForumTitle=(TextView)findViewById(R.id.tvForumTitle);
+        tvForumTitle.setText(getIntent().getStringExtra("forumName"));
         postChooseView = (RefreshListView) findViewById(R.id.lvPostChoose);
         postChooseView.setAdapter(new PostListAdapter(context,postChooseView,postJSONList));
 
@@ -50,10 +53,11 @@ public class PostListActivity extends JeeperTitleBar {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     JSONObject jsonObject = postJSONList.get(0).getJSONObject(position-1);
-                    Intent intent = new Intent();
-                    intent.setClass(PostListActivity.this, SubForumActivity.class);
-                    intent.putExtra("topicId",jsonObject.getString("topicid"));
-                    startActivity(intent);
+                    Toast.makeText(context,jsonObject.getString("topicid"),Toast.LENGTH_SHORT).show();
+                    //Intent intent = new Intent();
+                    //intent.setClass(PostListActivity.this, ReadPostActivity.class);
+                    //intent.putExtra("topicId",jsonObject.getString("topicid"));
+                    //startActivity(intent);
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(), R.string.NO_DATA,
                             Toast.LENGTH_SHORT).show();

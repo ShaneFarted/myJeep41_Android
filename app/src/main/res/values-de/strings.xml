@@ -19,5 +19,6 @@
 	<string name="navigation_drawer_close">Enge Navigation Schublade</string>
 	<string name="FORUM_AUTHOR">Author:</string>
 	<string name="FORUM_OPENNUM">Beiträge:</string>
+	<string name="LOGIN_INVALID">Benutzername/Passwort ungültig</string>
 
 </resources>
