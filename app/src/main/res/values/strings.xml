@@ -26,4 +26,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- FORUM-->
+    <string name="FORUM_AUTHOR">作者：</string>
+    <string name="FORUM_OPENNUM">回复数：</string>
 </resources>

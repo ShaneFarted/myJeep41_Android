@@ -81,4 +81,31 @@ public class ForumService {
             }
         });
     }
+
+    public void getPostList(String forumId,final ForumCallBack callBack){
+        HttpHelper.sendGet(Global.POSTLIST_URL+"?forumid="+forumId, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callBack.onFormFinish(null);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if(response.isSuccessful()){
+                    String jsonStr = response.body().string();
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(jsonStr);
+                        JSONArray result = jsonObject.getJSONArray("result");
+                        callBack.onFormFinish(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    callBack.onFormFinish(null);
+                }
+            }
+        });
+    }
 }

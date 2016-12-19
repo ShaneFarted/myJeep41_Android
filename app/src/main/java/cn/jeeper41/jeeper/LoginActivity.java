@@ -90,7 +90,6 @@ public class LoginActivity extends Activity implements OnClickListener{
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(LoginActivity.this,s,Toast.LENGTH_LONG).show();
                 saveLogin(s);//退出后就没了
                 finish();
             }
@@ -123,6 +122,7 @@ public class LoginActivity extends Activity implements OnClickListener{
             //提交数据
             //editor.commit();
             User us=new User(jo.getString("userid"),jo.getString("displayname"));
+            Toast.makeText(LoginActivity.this,"Willkommen "+us.getDisplayname(),Toast.LENGTH_LONG).show();
             Userapp=(UserApplication) getApplication();
             Userapp.setUser(us);
         }

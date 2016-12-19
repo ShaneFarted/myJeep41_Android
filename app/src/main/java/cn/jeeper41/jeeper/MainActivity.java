@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         Userapp=(UserApplication)getApplication();
         TextView textView = (TextView)findViewById(R.id.tvCurrentUsername);
-        if(Userapp.getUser().getUserid().length()>0){
+        if(Userapp.getUser().getUserid().length()>0&&Userapp.getUser()!=null){
             textView.setText(Userapp.getUser().getDisplayname().toString());
         }
     }
