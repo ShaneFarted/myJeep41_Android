@@ -17,5 +17,8 @@
 	<string name="CURRENT_VERSION">Aktuelle Version:</string>
 	<string name="navigation_drawer_open">Offene Navigation Schublade</string>
 	<string name="navigation_drawer_close">Enge Navigation Schublade</string>
+	<string name="FORUM_AUTHOR">Author:</string>
+	<string name="FORUM_OPENNUM">Beiträge:</string>
+	<string name="LOGIN_INVALID">Benutzername/Passwort ungültig</string>
 
 </resources>

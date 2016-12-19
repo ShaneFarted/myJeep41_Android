@@ -11,4 +11,5 @@ public class Global {
     public static String DATABASE_URL="http://www.myjeep41.com/verbinden.php";
     public static String AUTHENTICATION_URL="http://www.myjeep41.com/login_authentication.php";
     public static String FORUM_URL="http://www.myjeep41.com/forum_init.php";
+    public static String POSTLIST_URL="http://www.myjeep41.com/postlist_init.php";
 }

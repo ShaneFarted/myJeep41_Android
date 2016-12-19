@@ -1,6 +1,7 @@
 package cn.jeeper41.jeeper.forum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,8 +49,13 @@ public class SubForumActivity extends JeeperTitleBar {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     JSONObject jsonObject = subforumList.get(0).getJSONObject(position-1);
-                    Toast.makeText(getApplicationContext(),jsonObject.getString("groupid"),
-                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(SubForumActivity.this, PostListActivity.class);
+                    intent.putExtra("forumId",jsonObject.getString("forumid"));
+                    intent.putExtra("forumName",jsonObject.getString("forumname"));
+                    startActivity(intent);
+                   // Toast.makeText(getApplicationContext(),jsonObject.getString("forumid"),
+                   //         Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
