@@ -1,6 +1,7 @@
 package cn.jeeper41.jeeper.forum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -44,18 +46,17 @@ public class ForumActivity extends JeeperTitleBar {
         forumListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), R.string.NO_DATA,
-                        Toast.LENGTH_SHORT).show();
-
-                /*                try {
-                   *//* JSONObject jsonObject = forumList.get(position-1);
+                try {
+                    JSONObject jsonObject = (JSONObject)adapter.getItem(position-1);
                     Intent intent = new Intent();
-                    intent.setClass(ForumActivity.this, SubForumActivity.class);
-                    intent.putExtra("groupId",jsonObject.getString("groupid"));
-                    startActivity(intent);*//*
+                    intent.setClass(ForumActivity.this, PostListActivity.class);
+                    intent.putExtra("forumId",jsonObject.getString("forumid"));
+                    intent.putExtra("forumName",jsonObject.getString("forumname"));
+                    startActivity(intent);
                 } catch (JSONException e) {
-
-                }*/
+                    Toast.makeText(getApplicationContext(), R.string.NO_DATA,
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         // refreash listener
