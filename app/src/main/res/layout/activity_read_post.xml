@@ -18,57 +18,21 @@
         android:id="@+id/postListHolder"
         android:layout_weight="1">
 
-        <ListView
+        <cn.jeeper41.jeeper.wiget.RefreshListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:id="@+id/lvReplies" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/mainPostHolder">
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvPostAuthor" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvPostTopic"
-                android:textSize="20sp" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvPostContent"
-                android:textSize="16sp" />
-
-        </LinearLayout>
+            android:id="@+id/lvPostContent" />
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/bottomBarHolder"
         android:layout_weight="7"
-        android:background="@drawable/border">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/comment"
-            android:id="@+id/ibSendReply"
-            android:background="#00000000"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp" />
+        android:background="@drawable/border"
+        android:weightSum="1">
 
         <EditText
             android:layout_width="wrap_content"
@@ -78,9 +42,18 @@
             android:id="@+id/etWriteReply"
             android:hint="      在这里写回复"
             android:textSize="16sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="#00000000" />
-    </RelativeLayout>
+            android:background="#00000000"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/comment"
+            android:id="@+id/ibSendReply"
+            android:background="#00000000"
+            android:scaleType="fitEnd"
+            android:layout_width="40dp"
+            android:layout_weight="10" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -54,12 +54,12 @@ public class PostListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     JSONObject jsonObject = postJSONList.get(0).getJSONObject(position-1);
-                    Toast.makeText(context,jsonObject.getString("topicid"),Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent();
-                    //intent.setClass(PostListActivity.this, ReadPostActivity.class);
-                    //intent.putExtra("topicId",jsonObject.getString("topicid"));
-                    //intent.putExtra("topicId",jsonObject.getString("topicname"));
-                    //startActivity(intent);
+                    //Toast.makeText(context,jsonObject.getString("topicid"),Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(PostListActivity.this, ReadPostActivity.class);
+                    intent.putExtra("topicId",jsonObject.getString("topicid"));
+                    intent.putExtra("topicName",jsonObject.getString("topicname"));
+                    startActivity(intent);
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(), R.string.NO_DATA,
                             Toast.LENGTH_SHORT).show();

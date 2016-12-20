@@ -41,6 +41,7 @@
         <activity android:name=".forum.ForumActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".forum.SubForumActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".forum.PostListActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".forum.ReadPostActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

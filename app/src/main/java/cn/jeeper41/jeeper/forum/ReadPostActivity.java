@@ -15,9 +15,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.jeeper41.jeeper.R;
+import cn.jeeper41.jeeper.service.ForumCallBack;
+import cn.jeeper41.jeeper.service.ForumService;
 import cn.jeeper41.jeeper.wiget.RefreshListView;
 
 /**
@@ -38,35 +41,18 @@ public class ReadPostActivity extends AppCompatActivity{
         //showBackwardView(R.string.bar_backward,true);
         //setTitle("");
         // 获取参数
-        topicId = getIntent().getStringExtra("topicname");
-        TextView tvPostTopic=(TextView)findViewById(R.id.tvPostTopic);
-        tvPostTopic.setText(getIntent().getStringExtra("topicname"));
-        postChooseView = (RefreshListView) findViewById(R.id.lvPostChoose);
-        postChooseView.setAdapter(new PostListAdapter(context,postChooseView,postJSONList));
+        topicId = getIntent().getStringExtra("topicId");
+        //TextView tvPostTopic=(TextView)findViewById(R.id.tvPostTopic);
+        //tvPostTopic.setText(getIntent().getStringExtra("topicName"));
+        //postChooseView = (RefreshListView) findViewById(R.id.lvPostChoose);
+        //postChooseView.setAdapter(new PostListAdapter(context,postChooseView,postJSONList));
 
-        // set onclick event
-        postChooseView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    JSONObject jsonObject = postJSONList.get(0).getJSONObject(position-1);
-                    Toast.makeText(context,jsonObject.getString("topicid"),Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent();
-                    //intent.setClass(PostListActivity.this, ReadPostActivity.class);
-                    //intent.putExtra("topicId",jsonObject.getString("topicid"));
-                    //startActivity(intent);
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), R.string.NO_DATA,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         // refreash listener
-        postChooseView.setOnRefreashListener(new RefreshListView.OnRefreashListener() {
+        /* postChooseView.setOnRefreashListener(new RefreshListView.OnRefreashListener() {
             @Override
             public void onRefreash() {
                 //loadMoreData(topicId);
-            }
+           }
 
             @Override
             public void onLoadMore() {
@@ -94,6 +80,33 @@ public class ReadPostActivity extends AppCompatActivity{
         };
 
         // init list
-        postChooseView.refresh();
+        postChooseView.refresh();    */
+    }
+
+    private void loadMoreData(final String pageIndex){
+        new ForumService().getForum(new ForumCallBack() {
+            @Override
+            public void onFormFinish(JSONArray list) {
+                if(list != null){
+                    for(int i=0;i<list.length();i++){
+                        try {
+                            JSONObject jo = list.getJSONObject(i);
+                            JSONArray subForum = jo.getJSONArray("subforum");
+                            List<JSONObject> sectionList = new LinkedList<JSONObject>();
+                            for (int j = 0; j < subForum.length(); j++) {
+                                sectionList.add(subForum.getJSONObject(j));
+                            }
+                            //adapter.addSection(jo.getString("groupname"),new ForumAdapter(context,forumListView,sectionList));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }else{
+                    handler.sendEmptyMessage(2);
+                }
+                handler.sendEmptyMessage(1);
+            }
+        });
     }
 }
