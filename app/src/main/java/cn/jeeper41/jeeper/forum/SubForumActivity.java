@@ -1,7 +1,6 @@
 package cn.jeeper41.jeeper.forum;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,7 +28,7 @@ import cn.jeeper41.jeeper.wiget.RefreshListView;
 public class SubForumActivity extends JeeperTitleBar {
     private RefreshListView subforumListView;
     private Context context = this;
-    private List<JSONArray> subforumList = new ArrayList<JSONArray>();
+    private List<JSONObject> subforumList = new ArrayList<JSONObject>();
     private Handler handler;
     private String forumGroupId;
     @Override
@@ -48,14 +47,9 @@ public class SubForumActivity extends JeeperTitleBar {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    JSONObject jsonObject = subforumList.get(0).getJSONObject(position-1);
-                    Intent intent = new Intent();
-                    intent.setClass(SubForumActivity.this, PostListActivity.class);
-                    intent.putExtra("forumId",jsonObject.getString("forumid"));
-                    intent.putExtra("forumName",jsonObject.getString("forumname"));
-                    startActivity(intent);
-                   // Toast.makeText(getApplicationContext(),jsonObject.getString("forumid"),
-                   //         Toast.LENGTH_SHORT).show();
+                    JSONObject jsonObject = subforumList.get(position-1);
+                    Toast.makeText(getApplicationContext(),jsonObject.getString("groupid"),
+                            Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -106,17 +100,6 @@ public class SubForumActivity extends JeeperTitleBar {
             public void onFormFinish(JSONArray list) {
                 if(list != null){
                     subforumList.clear();
-                    for(int i = 0;i<list.length();i++){
-                        try {
-                            JSONObject jo = list.getJSONObject(i);
-                            if(forumGroupId.equals(jo.getString("groupid"))) {
-                                subforumList.add(jo.getJSONArray("subforum"));
-                                break;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
                 }else{
                     handler.sendEmptyMessage(2);
                 }

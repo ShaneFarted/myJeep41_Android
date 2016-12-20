@@ -2,21 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
     <ImageView
-        android:id="@+id/ivForumIcon"
-        android:src="@drawable/hello"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
-    <TextView
-        android:id="@+id/tvForumgroupId"
+        android:id="@+id/forumIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/forumicon"/>
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:textSize="24sp"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="8sp"
-        android:text="板块一"
-        android:fontFamily="sans-serif" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvForumName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1dp"
+            android:text="板块一"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="主题: 83978, 帖数: 25843860"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="最后发表：半小时前"
+            />
+    </LinearLayout>
+
 
 <!--    <TextView
         android:id="@+id/tvForumgroupName"

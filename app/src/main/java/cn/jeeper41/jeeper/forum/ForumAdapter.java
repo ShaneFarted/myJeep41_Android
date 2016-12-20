@@ -3,7 +3,6 @@ package cn.jeeper41.jeeper.forum;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -36,12 +33,12 @@ import static android.content.ContentValues.TAG;
 public class ForumAdapter extends BaseAdapter {
 
     private AsyncImageLoader asyncImageLoader;
-    private List<JSONArray> data;
+    private List<JSONObject> data;
     private LayoutInflater layoutInflater;
     private Context context;
     private ListView forumListView;
 
-    public ForumAdapter(Context context, ListView forumListView, List<JSONArray> data){
+    public ForumAdapter(Context context, ListView forumListView, List<JSONObject> data){
         this.context=context;
         this.forumListView = forumListView;
         this.data=data;
@@ -52,23 +49,17 @@ public class ForumAdapter extends BaseAdapter {
     public final class ForumeView{
         public ImageView image;
         public TextView title;
+        public Boolean header;
     };
 
     @Override
     public int getCount() {
-        if(data.size() == 1){
-            return data.get(0).length();
-        }
-        return 0;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        try {
-            return data.get(0).get(0);
-        } catch (JSONException e) {
-            return null;
-        }
+        return data.get(position);
     }
 
     @Override
@@ -82,14 +73,14 @@ public class ForumAdapter extends BaseAdapter {
         if(convertView==null){
             //获得组件，实例化组件
             view = new ForumeView();
-            convertView=layoutInflater.inflate(R.layout.forum_group_item, null);
-            view.image=(ImageView)convertView.findViewById(R.id.ivForumIcon);
-            view.title=(TextView)convertView.findViewById(R.id.tvForumgroupId);
+            convertView = layoutInflater.inflate(R.layout.forum_group_item, null);
+            //view.image = (ImageView) convertView.findViewById(R.id.ivForumIcon);
+            view.title = (TextView) convertView.findViewById(R.id.tvForumName);
             convertView.setTag(view);
         }else{
             view=(ForumeView)convertView.getTag();
         }
-        String url = "http://img1.imgtn.bdimg.com/it/u=2099421159,497813704&fm=23&gp=0.jpg";
+       /* String url = "http://img1.imgtn.bdimg.com/it/u=2099421159,497813704&fm=23&gp=0.jpg";
         view.image.setTag(url);
         Drawable cachedImage = asyncImageLoader.loadDrawable(url, new AsyncImageLoader.ImageCallback() {
             public void imageLoaded(Drawable imageDrawable, String imageUrl) {
@@ -101,23 +92,14 @@ public class ForumAdapter extends BaseAdapter {
         });
         if (cachedImage == null) {
             view.image.setImageResource(R.drawable.hello);
-        }else{
+        } else {
             view.image.setImageDrawable(cachedImage);
-        }
+        }*/
         //绑定数据
         try {
+            view.title.setText(data.get(position).getString("forumname"));
+        }catch (Exception e){
 
-            if(data.size() == 1) {
-                JSONObject jo = data.get(0).getJSONObject(position);
-                if(jo.has("groupname")) {
-                    view.title.setText(jo.getString("groupname"));
-                }
-                else{
-                    view.title.setText(jo.getString("forumname"));
-                }
-            }
-        } catch (JSONException e) {
-            view.title.setText("获取失败!");
         }
         return convertView;
     }

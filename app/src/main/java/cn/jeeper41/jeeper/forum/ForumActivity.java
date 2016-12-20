@@ -1,7 +1,6 @@
 package cn.jeeper41.jeeper.forum;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,10 +9,9 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.jeeper41.jeeper.R;
@@ -29,7 +27,7 @@ import cn.jeeper41.jeeper.wiget.RefreshListView;
 public class ForumActivity extends JeeperTitleBar {
     private RefreshListView forumListView;
     private Context context = this;
-    private List<JSONArray> forumList = new ArrayList<JSONArray>();
+    private SeparatedListAdapter adapter;
     private Handler handler;
 
     @Override
@@ -39,22 +37,25 @@ public class ForumActivity extends JeeperTitleBar {
         showBackwardView(R.string.bar_backward,true);
         setTitle("");
         forumListView = (RefreshListView) findViewById(R.id.lvForumChoose);
-        forumListView.setAdapter(new ForumAdapter(context,forumListView,forumList));
+        adapter = new SeparatedListAdapter(this);
+        forumListView.setAdapter(adapter);
 
         // set onclick even
         forumListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    JSONObject jsonObject = forumList.get(0).getJSONObject(position-1);
+                Toast.makeText(getApplicationContext(), R.string.NO_DATA,
+                        Toast.LENGTH_SHORT).show();
+
+                /*                try {
+                   *//* JSONObject jsonObject = forumList.get(position-1);
                     Intent intent = new Intent();
                     intent.setClass(ForumActivity.this, SubForumActivity.class);
                     intent.putExtra("groupId",jsonObject.getString("groupid"));
-                    startActivity(intent);
+                    startActivity(intent);*//*
                 } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), R.string.NO_DATA,
-                            Toast.LENGTH_SHORT).show();
-                }
+
+                }*/
             }
         });
         // refreash listener
@@ -101,8 +102,20 @@ public class ForumActivity extends JeeperTitleBar {
             @Override
             public void onFormFinish(JSONArray list) {
                 if(list != null){
-                    forumList.clear();
-                    forumList.add(list);
+                    for(int i=0;i<list.length();i++){
+                        try {
+                            JSONObject jo = list.getJSONObject(i);
+                            JSONArray subForum = jo.getJSONArray("subforum");
+                            List<JSONObject> sectionList = new LinkedList<JSONObject>();
+                            for (int j = 0; j < subForum.length(); j++) {
+                                sectionList.add(subForum.getJSONObject(j));
+                            }
+                            adapter.addSection(jo.getString("groupname"),new ForumAdapter(context,forumListView,sectionList));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
                 }else{
                     handler.sendEmptyMessage(2);
                 }
