@@ -6,7 +6,7 @@
     android:padding="10dp"
     >
     <ImageView
-        android:id="@+id/forumIcon"
+        android:id="@+id/ivForumIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/forumicon"/>
@@ -23,18 +23,16 @@
             android:textSize="18dp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1dp"
-            android:text="板块一"
             android:fontFamily="sans-serif" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="主题: 83978, 帖数: 25843860"
+            android:id="@+id/tvForumCount"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="最后发表：半小时前"
             />
     </LinearLayout>
 

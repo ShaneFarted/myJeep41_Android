@@ -2,13 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/ivForumIcon"
-        android:src="@drawable/hello"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
     <TextView
-        android:id="@+id/tvForumgroupName"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:textSize="24sp"

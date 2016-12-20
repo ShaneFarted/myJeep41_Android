@@ -19,7 +19,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.jeeper41.jeeper.AsyncImageLoader;
 import cn.jeeper41.jeeper.R;
@@ -37,6 +39,8 @@ public class ForumAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private ListView forumListView;
+    private Map<String,Integer> forumIcons = new HashMap<String,Integer>();
+
 
     public ForumAdapter(Context context, ListView forumListView, List<JSONObject> data){
         this.context=context;
@@ -44,12 +48,35 @@ public class ForumAdapter extends BaseAdapter {
         this.data=data;
         this.layoutInflater=LayoutInflater.from(context);
         asyncImageLoader = new AsyncImageLoader();
+
+        forumIcons.put("5",R.drawable.forumicon);
+        forumIcons.put("6",R.drawable.forumicon);
+        forumIcons.put("7",R.drawable.forumicon);
+        forumIcons.put("8",R.drawable.forumicon);
+        forumIcons.put("9",R.drawable.forumicon);
+        forumIcons.put("10",R.drawable.forumicon);
+        forumIcons.put("11",R.drawable.forumicon);
+        forumIcons.put("12",R.drawable.forumicon);
+        forumIcons.put("13",R.drawable.forumicon);
+        forumIcons.put("14",R.drawable.forumicon);
+        forumIcons.put("15",R.drawable.forumicon);
+        forumIcons.put("16",R.drawable.forumicon);
+        forumIcons.put("17",R.drawable.forumicon);
+        forumIcons.put("18",R.drawable.forumicon);
+        forumIcons.put("19",R.drawable.forumicon);
+        forumIcons.put("20",R.drawable.forumicon);
+        forumIcons.put("21",R.drawable.forumicon);
+        forumIcons.put("22",R.drawable.forumicon);
+        forumIcons.put("23",R.drawable.forumicon);
+        forumIcons.put("24",R.drawable.forumicon);
+        forumIcons.put("25",R.drawable.forumicon);
+        forumIcons.put("26",R.drawable.forumicon);
     }
 
     public final class ForumeView{
         public ImageView image;
         public TextView title;
-        public Boolean header;
+        public TextView forumCount;
     };
 
     @Override
@@ -74,30 +101,28 @@ public class ForumAdapter extends BaseAdapter {
             //获得组件，实例化组件
             view = new ForumeView();
             convertView = layoutInflater.inflate(R.layout.forum_group_item, null);
-            //view.image = (ImageView) convertView.findViewById(R.id.ivForumIcon);
+            view.image = (ImageView) convertView.findViewById(R.id.ivForumIcon);
             view.title = (TextView) convertView.findViewById(R.id.tvForumName);
+            view.forumCount = (TextView)convertView.findViewById(R.id.tvForumCount);
             convertView.setTag(view);
         }else{
             view=(ForumeView)convertView.getTag();
         }
-       /* String url = "http://img1.imgtn.bdimg.com/it/u=2099421159,497813704&fm=23&gp=0.jpg";
-        view.image.setTag(url);
-        Drawable cachedImage = asyncImageLoader.loadDrawable(url, new AsyncImageLoader.ImageCallback() {
-            public void imageLoaded(Drawable imageDrawable, String imageUrl) {
-                ImageView imageViewByTag = (ImageView) forumListView.findViewWithTag(imageUrl);
-                if (imageViewByTag != null) {
-                    imageViewByTag.setImageDrawable(imageDrawable);
-                }
-            }
-        });
-        if (cachedImage == null) {
-            view.image.setImageResource(R.drawable.hello);
-        } else {
-            view.image.setImageDrawable(cachedImage);
-        }*/
+
+
         //绑定数据
         try {
-            view.title.setText(data.get(position).getString("forumname"));
+            JSONObject jo = data.get(position);
+
+            view.title.setText(jo.getString("forumname"));
+            view.forumCount.setText(context.getString(R.string.FORUM_TOPIC_COUNT)+jo.getString("topiccount")+"" +
+                    "    "+context.getString(R.string.FORUM_POST_COUNT)+jo.getString("postcount"));
+            if(forumIcons.containsKey(jo.getString("forumid"))) {
+                view.image.setImageResource(forumIcons.get(jo.getString("forumid")));
+            }
+            else{
+                view.image.setImageResource(R.drawable.forumicon);
+            }
         }catch (Exception e){
 
         }
