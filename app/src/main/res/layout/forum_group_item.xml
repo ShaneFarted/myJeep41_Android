@@ -20,19 +20,21 @@
             android:id="@+id/tvForumName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1dp"
-            android:fontFamily="sans-serif" />
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvForumCount"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             />
     </LinearLayout>
 

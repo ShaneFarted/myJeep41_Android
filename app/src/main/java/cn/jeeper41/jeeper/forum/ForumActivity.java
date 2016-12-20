@@ -37,7 +37,7 @@ public class ForumActivity extends JeeperTitleBar {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum_choose);
         showBackwardView(R.string.bar_backward,true);
-        setTitle("");
+        setTitle("myJeep41 Forum");
         forumListView = (RefreshListView) findViewById(R.id.lvForumChoose);
         adapter = new SeparatedListAdapter(this);
         forumListView.setAdapter(adapter);

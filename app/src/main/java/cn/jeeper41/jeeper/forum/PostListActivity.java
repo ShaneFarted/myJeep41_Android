@@ -5,6 +5,7 @@ package cn.jeeper41.jeeper.forum;
         import android.os.Bundle;
         import android.os.Handler;
         import android.os.Message;
+        import android.support.v7.app.AppCompatActivity;
         import android.view.View;
         import android.widget.AdapterView;
         import android.widget.TextView;
@@ -27,7 +28,7 @@ package cn.jeeper41.jeeper.forum;
  * Created by Shane on 2016-12-18.
  */
 
-public class PostListActivity extends JeeperTitleBar {
+public class PostListActivity extends AppCompatActivity {
     private RefreshListView postChooseView;
     private Context context = this;
     private List<JSONArray> postJSONList = new ArrayList<JSONArray>();
@@ -38,8 +39,8 @@ public class PostListActivity extends JeeperTitleBar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_choose);
-        showBackwardView(R.string.bar_backward,true);
-        setTitle("");
+        //showBackwardView(R.string.bar_backward,true);
+        //setTitle("");
         // 获取参数
         forumId = getIntent().getStringExtra("forumId");
         TextView tvForumTitle=(TextView)findViewById(R.id.tvForumTitle);
@@ -57,6 +58,7 @@ public class PostListActivity extends JeeperTitleBar {
                     //Intent intent = new Intent();
                     //intent.setClass(PostListActivity.this, ReadPostActivity.class);
                     //intent.putExtra("topicId",jsonObject.getString("topicid"));
+                    //intent.putExtra("topicId",jsonObject.getString("topicname"));
                     //startActivity(intent);
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(), R.string.NO_DATA,
