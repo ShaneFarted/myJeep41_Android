@@ -97,34 +97,44 @@ public class ForumAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ForumeView view = null;
-        if(convertView==null){
-            //获得组件，实例化组件
-            view = new ForumeView();
-            convertView = layoutInflater.inflate(R.layout.forum_group_item, null);
-            view.image = (ImageView) convertView.findViewById(R.id.ivForumIcon);
-            view.title = (TextView) convertView.findViewById(R.id.tvForumName);
-            view.forumCount = (TextView)convertView.findViewById(R.id.tvForumCount);
-            convertView.setTag(view);
-        }else{
-            view=(ForumeView)convertView.getTag();
-        }
-
-
         //绑定数据
         try {
             JSONObject jo = data.get(position);
 
-            view.title.setText(jo.getString("forumname"));
-            view.forumCount.setText(context.getString(R.string.FORUM_TOPIC_COUNT)+jo.getString("topiccount")+"" +
-                    "    "+context.getString(R.string.FORUM_POST_COUNT)+jo.getString("postcount"));
-            if(forumIcons.containsKey(jo.getString("forumid"))) {
-                view.image.setImageResource(forumIcons.get(jo.getString("forumid")));
+            if(convertView==null){
+                //获得组件，实例化组件
+                view = new ForumeView();
+                convertView = layoutInflater.inflate(R.layout.forum_group_item, null);
+                view.image = (ImageView) convertView.findViewById(R.id.ivForumIcon);
+                view.title = (TextView) convertView.findViewById(R.id.tvForumName);
+                view.forumCount = (TextView) convertView.findViewById(R.id.tvForumCount);
+                convertView.setTag(view);
+            }else{
+                view=(ForumeView)convertView.getTag();
+            }
+
+
+
+            if(jo.has("forumid")) {
+                view.image.setVisibility(View.VISIBLE);
+                view.forumCount.setVisibility(View.VISIBLE);
+                view.title.setText(jo.getString("forumname"));
+                view.forumCount.setText(context.getString(R.string.FORUM_TOPIC_COUNT) + jo.getString("topiccount") + "" +
+                        "    " + context.getString(R.string.FORUM_POST_COUNT) + jo.getString("postcount"));
+                if (forumIcons.containsKey(jo.getString("forumid"))) {
+                    view.image.setImageResource(forumIcons.get(jo.getString("forumid")));
+                } else {
+                    view.image.setImageResource(R.drawable.forumicon);
+                }
             }
             else{
-                view.image.setImageResource(R.drawable.forumicon);
+                view.image.setVisibility(View.GONE);
+                view.forumCount.setVisibility(View.GONE);
+                view.title.setText(jo.getString("groupname"));
+                view.title.setTextSize(20);
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return convertView;
     }

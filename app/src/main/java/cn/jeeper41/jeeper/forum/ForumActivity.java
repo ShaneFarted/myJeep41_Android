@@ -29,7 +29,7 @@ import cn.jeeper41.jeeper.wiget.RefreshListView;
 public class ForumActivity extends JeeperTitleBar {
     private RefreshListView forumListView;
     private Context context = this;
-    private SeparatedListAdapter adapter;
+    private List<JSONObject> forumList;
     private Handler handler;
 
     @Override
@@ -39,26 +39,31 @@ public class ForumActivity extends JeeperTitleBar {
         showBackwardView(R.string.bar_backward,true);
         setTitle("myJeep41 Forum");
         forumListView = (RefreshListView) findViewById(R.id.lvForumChoose);
-        adapter = new SeparatedListAdapter(this);
-        forumListView.setAdapter(adapter);
+        forumList = new LinkedList<JSONObject>();
+        forumListView.setAdapter(new ForumAdapter(context,forumListView,forumList));
 
         // set onclick even
         forumListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    JSONObject jsonObject = (JSONObject)adapter.getItem(position-1);
+                    JSONObject jsonObject = (JSONObject)forumList.get(position-1);
+                    if(jsonObject.has("groupid")){
+                        return;
+                    }
                     Intent intent = new Intent();
                     intent.setClass(ForumActivity.this, PostListActivity.class);
                     intent.putExtra("forumId",jsonObject.getString("forumid"));
                     intent.putExtra("forumName",jsonObject.getString("forumname"));
                     startActivity(intent);
                 } catch (JSONException e) {
+                    e.printStackTrace();
                     Toast.makeText(getApplicationContext(), R.string.NO_DATA,
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
         // refreash listener
         forumListView.setOnRefreashListener(new RefreshListView.OnRefreashListener() {
             @Override
@@ -68,10 +73,8 @@ public class ForumActivity extends JeeperTitleBar {
 
             @Override
             public void onLoadMore() {
-                loadMoreData("0");
             }
         });
-
         handler = new Handler(getMainLooper()){
             @Override
             public void handleMessage(Message msg) {
@@ -103,6 +106,7 @@ public class ForumActivity extends JeeperTitleBar {
             @Override
             public void onFormFinish(JSONArray list) {
                 if(list != null){
+                    forumList.clear();
                     for(int i=0;i<list.length();i++){
                         try {
                             JSONObject jo = list.getJSONObject(i);
@@ -111,7 +115,9 @@ public class ForumActivity extends JeeperTitleBar {
                             for (int j = 0; j < subForum.length(); j++) {
                                 sectionList.add(subForum.getJSONObject(j));
                             }
-                            adapter.addSection(jo.getString("groupname"),new ForumAdapter(context,forumListView,sectionList));
+                            jo.remove("subforum");
+                            forumList.add(jo);
+                            forumList.addAll(sectionList);
                         }catch (Exception e){
                             e.printStackTrace();
                         }
