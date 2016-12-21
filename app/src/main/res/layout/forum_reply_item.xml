@@ -6,18 +6,18 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/repliyinfoHolder">
 
         <TextView
-            android:text="TextView"
+            android:text="用户名"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvReplyAuthor"
             android:layout_weight="1" />
 
         <TextView
-            android:text="TextView"
+            android:text="沙发"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvReplyIndex"
@@ -27,11 +27,11 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/replycontentHolder">
 
         <TextView
-            android:text="TextView"
+            android:text="楼主说的好"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvReplyContent" />

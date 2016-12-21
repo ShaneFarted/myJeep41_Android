@@ -7,6 +7,8 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,9 +31,10 @@ import cn.jeeper41.jeeper.wiget.RefreshListView;
  */
 
 public class ReadPostActivity extends AppCompatActivity{
-    private RefreshListView postChooseView;
+    private RefreshListView ReadPostView;
+    private ReadPostAdapter adapter;
     private Context context = this;
-    private List<JSONArray> postJSONList = new ArrayList<JSONArray>();
+    private List<JSONObject> postJSONList = new LinkedList<JSONObject>();
     private Handler handler;
     private String topicId;
 
@@ -38,25 +42,22 @@ public class ReadPostActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_post);
-        //showBackwardView(R.string.bar_backward,true);
-        //setTitle("");
+        ReadPostView = (RefreshListView) findViewById(R.id.lvPostContent);
+        //adapter = new ReadPostAdapter(this,ReadPostView,postJSONList);
+        //ReadPostView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
         // 获取参数
         topicId = getIntent().getStringExtra("topicId");
-        //TextView tvPostTopic=(TextView)findViewById(R.id.tvPostTopic);
-        //tvPostTopic.setText(getIntent().getStringExtra("topicName"));
-        //postChooseView = (RefreshListView) findViewById(R.id.lvPostChoose);
-        //postChooseView.setAdapter(new PostListAdapter(context,postChooseView,postJSONList));
-
         // refreash listener
-        /* postChooseView.setOnRefreashListener(new RefreshListView.OnRefreashListener() {
+         ReadPostView.setOnRefreashListener(new RefreshListView.OnRefreashListener() {
             @Override
             public void onRefreash() {
-                //loadMoreData(topicId);
+                loadMoreData(topicId);
            }
 
             @Override
             public void onLoadMore() {
-                //loadMoreData(topicId);
+                loadMoreData(topicId);
             }
         });
 
@@ -66,7 +67,7 @@ public class ReadPostActivity extends AppCompatActivity{
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        postChooseView.onRefreashComplete();
+                        ReadPostView.onRefreashComplete();
                         break;
                     case 2:
                         Toast.makeText(getApplicationContext(), R.string.NO_DATA,
@@ -80,29 +81,27 @@ public class ReadPostActivity extends AppCompatActivity{
         };
 
         // init list
-        postChooseView.refresh();    */
+        ReadPostView.refresh();
     }
 
-    private void loadMoreData(final String pageIndex){
-        new ForumService().getForum(new ForumCallBack() {
+    private void loadMoreData(final String topicid){
+        new ForumService().getDetailPostList(topicid,new ForumCallBack() {
             @Override
-            public void onFormFinish(JSONArray list) {
+            public void onFormFinish(JSONArray list) { //list里为result解析后的array
                 if(list != null){
-                    for(int i=0;i<list.length();i++){
                         try {
-                            JSONObject jo = list.getJSONObject(i);
-                            JSONArray subForum = jo.getJSONArray("subforum");
-                            List<JSONObject> sectionList = new LinkedList<JSONObject>();
-                            for (int j = 0; j < subForum.length(); j++) {
-                                sectionList.add(subForum.getJSONObject(j));
+                            List<JSONObject> PostsList = new LinkedList<JSONObject>();
+                            for(int i=0;i<list.length();i++) {
+                                PostsList.add(list.getJSONObject(i));
                             }
-                            //adapter.addSection(jo.getString("groupname"),new ForumAdapter(context,forumListView,sectionList));
+                            ReadPostAdapter adapter=new ReadPostAdapter(context,PostsList);
+                            ReadPostView.setAdapter(adapter);
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }
                     }
-
-                }else{
+                else{
                     handler.sendEmptyMessage(2);
                 }
                 handler.sendEmptyMessage(1);

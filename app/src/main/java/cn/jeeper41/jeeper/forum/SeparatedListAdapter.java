@@ -15,7 +15,7 @@ import cn.jeeper41.jeeper.R;
 public class SeparatedListAdapter extends BaseAdapter {
   
     public final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();
-    public final ArrayAdapter<String> headers;
+    public final ArrayAdapter<String> headers;  //板块名adapter
     public final static int TYPE_SECTION_HEADER = 0;  
   
     public SeparatedListAdapter(Context context) {
@@ -23,7 +23,7 @@ public class SeparatedListAdapter extends BaseAdapter {
     }  
   
     public void addSection(String section, Adapter adapter) {  
-        this.headers.add(section);  
+        this.headers.add(section);  //板块名string
         this.sections.put(section, adapter);  
     }  
   
