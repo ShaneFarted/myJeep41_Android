@@ -41,7 +41,8 @@ public class ForumActivity extends JeeperTitleBar {
         forumListView = (RefreshListView) findViewById(R.id.lvForumChoose);
         forumList = new LinkedList<JSONObject>();
         forumListView.setAdapter(new ForumAdapter(context,forumListView,forumList));
-
+        // disenable load more
+        forumListView.setEnableLoadMore(false);
         // set onclick even
         forumListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,6 +87,7 @@ public class ForumActivity extends JeeperTitleBar {
                     case 2:
                         Toast.makeText(getApplicationContext(), R.string.NO_DATA,
                                 Toast.LENGTH_SHORT).show();
+                        forumListView.onRefreashComplete();
                         break;
                     default:
                         break;

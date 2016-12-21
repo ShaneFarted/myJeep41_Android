@@ -42,6 +42,10 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     private int mFooterViewHeight;
     private View footerView;
 
+    /** 是否启用动画，默认treu*/
+    private Boolean enableAnim = true;
+    private Boolean enableLoadMore = true;
+
     public RefreshListView(Context context) {
         super(context);
         initHeaderView();
@@ -99,13 +103,15 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState == SCROLL_STATE_FLING || scrollState == SCROLL_STATE_IDLE) {
-            if (getLastVisiblePosition() == getCount() - 1 && !isLoadingMOre) {//滑倒最后
-                footerView.setPadding(0, 0, 0, 0);
-                setSelection(getCount() - 1);//改变ListView的显示位置
-                isLoadingMOre = true;
-                if (mListener != null) {
-                    mListener.onLoadMore();
+        if(enableLoadMore) {
+            if (scrollState == SCROLL_STATE_FLING || scrollState == SCROLL_STATE_IDLE) {
+                if (getLastVisiblePosition() == getCount() - 1 && !isLoadingMOre) {//滑倒最后
+                    footerView.setPadding(0, 0, 0, 0);
+                    setSelection(getCount() - 1);//改变ListView的显示位置
+                    isLoadingMOre = true;
+                    if (mListener != null) {
+                        mListener.onLoadMore();
+                    }
                 }
             }
         }
@@ -118,52 +124,53 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                startY = (int) ev.getRawY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (startY == -1) {//有时候不会响应 MotionEvent.ACTION_DOWN 事件,这是要重新获取startY坐标
+        if(enableAnim) {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
                     startY = (int) ev.getRawY();
-                }
-                //当正在刷新的时候,跳出循环,不再执行下面逻辑
-                if (mCurrrentState == STATE_RELEASE_REFRESH) {
                     break;
-
-                }
-
-                endY = (int) ev.getRawY();
-                int dy = endY - startY;//计算手指滑动距离
-                if (dy > 0 && getFirstVisiblePosition() == 0) {// 只有下拉并且当前是第一个item,才允许下拉
-                    int padding = dy - measuredHeight;//计算padding
-                    mHeaderView.setPadding(0, padding, 0, 0);//设置当前padding
-
-                    if (padding > 0 && mCurrrentState != STATE_RELEASE_REFRESH) {
-                        mCurrrentState = STATE_RELEASE_REFRESH;
-                        refreshState();
-
-                    } else if (padding < 0 && mCurrrentState != STATE_PULL_REFRESH) {// 改为下拉刷新状态
-                        mCurrrentState = STATE_PULL_REFRESH;
-                        refreshState();
+                case MotionEvent.ACTION_MOVE:
+                    if (startY == -1) {//有时候不会响应 MotionEvent.ACTION_DOWN 事件,这是要重新获取startY坐标
+                        startY = (int) ev.getRawY();
                     }
-                    return true;
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                startY = -1;//手指抬起重置
-                //当状态是松开刷新时抬起了手指,正在刷新
-                if (mCurrrentState == STATE_RELEASE_REFRESH) {
-                    mCurrrentState = STATE_REFRESHING;// 正在刷新
-                    mHeaderView.setPadding(0, 0, 0, 0);// 显示
-                    refreshState();
-                } else if (mCurrrentState == STATE_PULL_REFRESH) {
-                    mHeaderView.setPadding(0, -measuredHeight, 0, 0);// 隐藏
-                }
-                break;
-            default:
-                break;
-        }
+                    //当正在刷新的时候,跳出循环,不再执行下面逻辑
+                    if (mCurrrentState == STATE_RELEASE_REFRESH) {
+                        break;
 
+                    }
+
+                    endY = (int) ev.getRawY();
+                    int dy = endY - startY;//计算手指滑动距离
+                    if (dy > 0 && getFirstVisiblePosition() == 0) {// 只有下拉并且当前是第一个item,才允许下拉
+                        int padding = dy - measuredHeight;//计算padding
+                        mHeaderView.setPadding(0, padding, 0, 0);//设置当前padding
+
+                        if (padding > 0 && mCurrrentState != STATE_RELEASE_REFRESH) {
+                            mCurrrentState = STATE_RELEASE_REFRESH;
+                            refreshState();
+
+                        } else if (padding < 0 && mCurrrentState != STATE_PULL_REFRESH) {// 改为下拉刷新状态
+                            mCurrrentState = STATE_PULL_REFRESH;
+                            refreshState();
+                        }
+                        return true;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    startY = -1;//手指抬起重置
+                    //当状态是松开刷新时抬起了手指,正在刷新
+                    if (mCurrrentState == STATE_RELEASE_REFRESH) {
+                        mCurrrentState = STATE_REFRESHING;// 正在刷新
+                        mHeaderView.setPadding(0, 0, 0, 0);// 显示
+                        refreshState();
+                    } else if (mCurrrentState == STATE_PULL_REFRESH) {
+                        mHeaderView.setPadding(0, -measuredHeight, 0, 0);// 隐藏
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
         return super.onTouchEvent(ev);
     }
 
@@ -223,6 +230,22 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     public void setOnRefreashListener(OnRefreashListener listener) {
         mListener = listener;
 
+    }
+
+    public Boolean getEnableAnim() {
+        return enableAnim;
+    }
+
+    public void setEnableAnim(Boolean enableAnim) {
+        this.enableAnim = enableAnim;
+    }
+
+    public Boolean getEnableLoadMore() {
+        return enableLoadMore;
+    }
+
+    public void setEnableLoadMore(Boolean enableLoadMore) {
+        this.enableLoadMore = enableLoadMore;
     }
 
 
