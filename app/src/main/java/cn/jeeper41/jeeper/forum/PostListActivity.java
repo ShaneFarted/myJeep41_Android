@@ -34,6 +34,7 @@ public class PostListActivity extends AppCompatActivity {
     private List<JSONArray> postJSONList = new ArrayList<JSONArray>();
     private Handler handler;
     private String forumId;
+    PostListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,9 @@ public class PostListActivity extends AppCompatActivity {
         TextView tvForumTitle=(TextView)findViewById(R.id.tvForumTitle);
         tvForumTitle.setText(getIntent().getStringExtra("forumName"));
         postChooseView = (RefreshListView) findViewById(R.id.lvPostChoose);
-        PostListAdapter adapter=new PostListAdapter(context,postChooseView,postJSONList);
-        adapter.notifyDataSetChanged();
+        adapter=new PostListAdapter(context,postChooseView,postJSONList);
         postChooseView.setAdapter(adapter);
-
+        postChooseView.setEnableLoadMore(false);
         // set onclick even
         postChooseView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,11 +73,13 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onRefreash() {
                 loadMoreData(forumId);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onLoadMore() {
                 loadMoreData(forumId);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -115,6 +117,7 @@ public class PostListActivity extends AppCompatActivity {
                 if(list != null){
                     postJSONList.clear();
                     postJSONList.add(list);
+                    //adapter.notifyDataSetChanged();
                 }else{
                     handler.sendEmptyMessage(2);
                 }

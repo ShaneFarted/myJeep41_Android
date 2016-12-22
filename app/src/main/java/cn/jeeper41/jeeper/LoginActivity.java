@@ -45,9 +45,8 @@ public class LoginActivity extends Activity implements OnClickListener{
         layout.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(getApplicationContext(), "提示：点击窗口外部关闭窗口！",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "提示：点击窗口外部关闭窗口！",
+                //        Toast.LENGTH_SHORT).show();
             }
         });
         //添加按钮监听

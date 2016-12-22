@@ -1,32 +1,33 @@
 package cn.jeeper41.jeeper.forum;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import cn.jeeper41.jeeper.LoginActivity;
 import cn.jeeper41.jeeper.R;
+import cn.jeeper41.jeeper.config.Global;
 import cn.jeeper41.jeeper.entity.UserApplication;
 import cn.jeeper41.jeeper.service.ForumCallBack;
 import cn.jeeper41.jeeper.service.ForumService;
+import cn.jeeper41.jeeper.service.RequestHandler;
 import cn.jeeper41.jeeper.wiget.RefreshListView;
 
 /**
@@ -42,6 +43,7 @@ public class ReadPostActivity extends AppCompatActivity{
     private String topicId;
     private Button btnSend;
     private EditText etReplyContent;
+    UserApplication Userapp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +63,25 @@ public class ReadPostActivity extends AppCompatActivity{
             e.printStackTrace();
         }
         ReadPostView.setAdapter(adapter);
-
+        ReadPostView.setEnableLoadMore(false);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 etReplyContent=(EditText) findViewById(R.id.etWriteReply);
                 //check if already logged in
-                UserApplication Userapp=new UserApplication();
-                if (Userapp.getUser()!=null){
-                    Toast.makeText(context,etReplyContent.getText(),Toast.LENGTH_SHORT);
+                Userapp=(UserApplication)getApplication();
+                if (Userapp.getUser().getUserid().length()>0){
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    //Toast.makeText(getApplicationContext(),etReplyContent.getText(),Toast.LENGTH_SHORT).show();
+                    //send reply to server
+                    replyPost(Userapp.getUser().getUserid());
                 }
-                else
-                    Toast.makeText(context,"请先登录后回复",Toast.LENGTH_SHORT);
-                //send reply to server
+                else {
+                    Toast.makeText(getApplicationContext(), "请先登录后回复", Toast.LENGTH_SHORT).show();
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
             }
         });
 
@@ -82,11 +90,13 @@ public class ReadPostActivity extends AppCompatActivity{
             @Override
             public void onRefreash() {
                 loadMoreData(topicId);
+                adapter.notifyDataSetChanged();
            }
 
             @Override
             public void onLoadMore() {
                 loadMoreData(topicId);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -113,19 +123,57 @@ public class ReadPostActivity extends AppCompatActivity{
         ReadPostView.refresh();
     }
 
+    //post方法回复帖子
+    private void replyPost(final String uid){
+        final String pcontent=((EditText)findViewById(R.id.etWriteReply)).getText().toString();
+        class Testconn extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(ReadPostActivity.this,"Posting...","Please Wait...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) { //s为服务器返回的值
+                super.onPostExecute(s);
+                loading.dismiss();
+                if(s.equals("1")) {
+                    Toast.makeText(context,"回复成功！",Toast.LENGTH_SHORT).show();
+                    etReplyContent.setText("");
+                    ReadPostView.refresh();
+                }
+                else
+                    Toast.makeText(context,"恢复失败！",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String,String> params = new HashMap<>();
+                params.put("pcontent",pcontent);
+                params.put("userid",uid);
+                params.put("topicid",topicId);
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(Global.SENDREPLY_URL, params);
+                return res;
+            }
+        }
+        Testconn test=new Testconn();
+        test.execute();
+    }
+
     private void loadMoreData(final String topicid){
         new ForumService().getDetailPostList(topicid,new ForumCallBack() {
             @Override
             public void onFormFinish(JSONArray list) { //list里为result解析后的array
                 if(list != null){
                         try {
-                            List<JSONObject> PostsList = new LinkedList<JSONObject>();
+                            postJSONList.clear();
                             for(int i=0;i<list.length();i++) {
-                                PostsList.add(list.getJSONObject(i));
+                                postJSONList.add(list.getJSONObject(i));
                             }
-                            adapter=new ReadPostAdapter(context,PostsList);
-                            adapter.notifyDataSetChanged();
-                            ReadPostView.setAdapter(adapter);
+                            //adapter.notifyDataSetChanged();
 
 
                         }catch (Exception e){
