@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -95,7 +96,7 @@ public class ForumActivity extends JeeperTitleBar {
 
             }
         };
-
+        Log.v("linx", "loadMoreData:========================================================加载中==============");
         // init list
         forumListView.refresh();
     }
@@ -104,6 +105,7 @@ public class ForumActivity extends JeeperTitleBar {
      * @param pageIndex
      */
     private void loadMoreData(final String pageIndex){
+        Log.v("linx", "loadMoreData:========================================================加载中==============");
         new ForumService().getForum(new ForumCallBack() {
             @Override
             public void onFormFinish(JSONArray list) {

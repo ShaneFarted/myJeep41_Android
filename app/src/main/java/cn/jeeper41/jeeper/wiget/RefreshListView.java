@@ -46,6 +46,9 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     private Boolean enableAnim = true;
     private Boolean enableLoadMore = true;
 
+    private Boolean isNetReqeust = false;
+
+
     public RefreshListView(Context context) {
         super(context);
         initHeaderView();
@@ -105,11 +108,17 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if(enableLoadMore) {
             if (scrollState == SCROLL_STATE_FLING || scrollState == SCROLL_STATE_IDLE) {
+
                 if (getLastVisiblePosition() == getCount() - 1 && !isLoadingMOre) {//滑倒最后
+                    //当正在刷新的时候,跳出循环,不再执行下面逻辑
+                    if (mCurrrentState == STATE_RELEASE_REFRESH) {
+                        return;
+                    }
                     footerView.setPadding(0, 0, 0, 0);
                     setSelection(getCount() - 1);//改变ListView的显示位置
                     isLoadingMOre = true;
-                    if (mListener != null) {
+                    if (mListener != null && !isNetReqeust) {
+                        isNetReqeust = true;
                         mListener.onLoadMore();
                     }
                 }
@@ -136,7 +145,6 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
                     //当正在刷新的时候,跳出循环,不再执行下面逻辑
                     if (mCurrrentState == STATE_RELEASE_REFRESH) {
                         break;
-
                     }
 
                     endY = (int) ev.getRawY();
@@ -215,7 +223,8 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
                 ivArrow.clearAnimation();// 必须先清除动画,才能隐藏
                 ivArrow.setVisibility(View.GONE);
                 pbProgress.setVisibility(View.VISIBLE);
-                if (mListener != null) {
+                if (mListener != null && !isNetReqeust) {
+                    isNetReqeust = true;
                     mListener.onRefreash();
                 }
                 break;
@@ -258,20 +267,16 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
      * 收起下拉刷新的控件
      */
     public void onRefreashComplete() {
-
-        if (isLoadingMOre) {
             footerView.setPadding(0, -mFooterViewHeight, 0, 0);//隐藏脚布局
             isLoadingMOre = false;
-
-        } else {
-
             mCurrrentState = STATE_PULL_REFRESH;
             tvTitle.setText(R.string.STATE_PULL_REFRESH);
             ivArrow.setVisibility(View.VISIBLE);
             pbProgress.setVisibility(View.GONE);
 
             mHeaderView.setPadding(0, -measuredHeight, 0, 0);//隐藏
-        }
+
+        isNetReqeust = false;
 
     }
 
