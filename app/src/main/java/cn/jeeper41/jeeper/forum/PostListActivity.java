@@ -46,7 +46,9 @@ public class PostListActivity extends AppCompatActivity {
         TextView tvForumTitle=(TextView)findViewById(R.id.tvForumTitle);
         tvForumTitle.setText(getIntent().getStringExtra("forumName"));
         postChooseView = (RefreshListView) findViewById(R.id.lvPostChoose);
-        postChooseView.setAdapter(new PostListAdapter(context,postChooseView,postJSONList));
+        PostListAdapter adapter=new PostListAdapter(context,postChooseView,postJSONList);
+        adapter.notifyDataSetChanged();
+        postChooseView.setAdapter(adapter);
 
         // set onclick even
         postChooseView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

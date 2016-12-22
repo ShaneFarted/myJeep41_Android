@@ -32,28 +32,29 @@
         android:id="@+id/bottomBarHolder"
         android:layout_weight="7"
         android:background="@drawable/border"
-        android:weightSum="1">
+        android:weightSum="10">
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/etWriteReply"
             android:hint="      在这里写回复"
             android:textSize="16sp"
             android:background="#00000000"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1" />
+            android:layout_weight="9"
+            android:inputType="text" />
 
-        <ImageButton
+        <Button
+            android:text="@string/FORUM_SEND_REPLY"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/comment"
-            android:id="@+id/ibSendReply"
-            android:background="#00000000"
-            android:scaleType="fitEnd"
-            android:layout_width="40dp"
-            android:layout_weight="10" />
+            android:id="@+id/btnSendReply"
+            android:background="@drawable/rounded_rectangle"
+            android:textColor="#ffffffff"
+            android:textSize="17sp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </LinearLayout>

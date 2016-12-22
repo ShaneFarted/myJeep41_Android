@@ -33,4 +33,5 @@
     <string name="FORUM_OPENNUM">回复数：</string>
     <string name="FORUM_POST_COUNT">发帖：</string>
     <string name="FORUM_TOPIC_COUNT">主题：</string>
+    <string name="FORUM_SEND_REPLY">发送</string>
 </resources>

@@ -20,5 +20,8 @@
 	<string name="FORUM_AUTHOR">Author:</string>
 	<string name="FORUM_OPENNUM">Beiträge:</string>
 	<string name="LOGIN_INVALID">Benutzername/Passwort ungültig</string>
+	<string name="FORUM_SEND_REPLY">SENDEN</string>
+	<string name="FORUM_POST_COUNT">Beiträge:</string>
+	<string name="FORUM_TOPIC_COUNT">Themen:</string>
 
 </resources>

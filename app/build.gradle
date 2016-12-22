@@ -9,7 +9,7 @@ android {
             storePassword 'qianming666'
         }
     }
-    compileSdkVersion 24
+    compileSdkVersion 23
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "cn.jeeper41.jeeper"
