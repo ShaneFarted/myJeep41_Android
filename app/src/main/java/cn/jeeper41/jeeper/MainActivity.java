@@ -2,6 +2,7 @@ package cn.jeeper41.jeeper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import java.util.List;
 import cn.jeeper41.jeeper.about.AboutUsActivity;
 import cn.jeeper41.jeeper.blog.ArticleDetailActivity;
 import cn.jeeper41.jeeper.entity.Article;
+import cn.jeeper41.jeeper.entity.User;
 import cn.jeeper41.jeeper.entity.UserApplication;
 import cn.jeeper41.jeeper.forum.ForumActivity;
 import cn.jeeper41.jeeper.service.ArticleCallBack;
@@ -61,11 +64,45 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-//边栏选项监听器
+        //边栏选项监听器
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//点击头像弹出登录框
-        View headerView = navigationView.getHeaderView(0);
+        //获取边栏的HeaderView
+        final View headerView = navigationView.getHeaderView(0);
+        //注销按钮
+        final Button btnlogout=(Button)headerView.findViewById(R.id.btnLogout);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //清空全局变量
+                Userapp=(UserApplication) getApplication();
+                User us=new User("","");
+                Userapp.setUser(us);
+                //清空记住我
+                SharedPreferences sp = getSharedPreferences("userprofile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("saveduserid", "");
+                editor.putString("saveddisplayname","");
+                editor.commit();
+                btnlogout.setVisibility(View.INVISIBLE);
+                TextView tvusn=(TextView)headerView.findViewById(R.id.tvCurrentUsername);
+                tvusn.setText(getString(R.string.LOGIN_OR_REGISTER));
+                Toast.makeText(context,getString(R.string.LOGOUT_SUCCESS),Toast.LENGTH_SHORT).show();
+            }
+        });
+        //检查是否之前记住我
+        SharedPreferences preferences=getSharedPreferences("userprofile", Context.MODE_PRIVATE);
+        String savedid=preferences.getString("saveduserid","");
+        String savedname=preferences.getString("saveddisplayname","");
+        if(savedid.length()>0){
+            Userapp=(UserApplication) getApplication();
+            User us=new User(savedid,savedname);
+            Userapp.setUser(us);
+            TextView tvusn=(TextView)headerView.findViewById(R.id.tvCurrentUsername);
+            tvusn.setText(savedname);
+            btnlogout.setVisibility(View.VISIBLE);
+        }
+        //点击头像登录
         ImageView Login = (ImageView) headerView.findViewById(R.id.ivPortrait);
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,10 +168,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
         Userapp=(UserApplication)getApplication();
-        TextView textView = (TextView)findViewById(R.id.tvCurrentUsername);
+        TextView textView = (TextView)headerView.findViewById(R.id.tvCurrentUsername);
         if(Userapp.getUser().getUserid().length()>0&&Userapp.getUser()!=null){
             textView.setText(Userapp.getUser().getDisplayname().toString());
+            Button btnlogout=(Button)headerView.findViewById(R.id.btnLogout);
+            btnlogout.setVisibility(View.VISIBLE);
         }
     }
     /**

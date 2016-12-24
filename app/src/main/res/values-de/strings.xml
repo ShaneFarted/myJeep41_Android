@@ -12,7 +12,7 @@
 	<string name="STATE_LOAD_MORE">Laden mehr&#8230;</string>
 	<string name="LAST_REFRESH_TIME">Letzte Aktualisierungszeit:</string>
 	<string name="NO_DATA">Keine Daten mehr</string>
-	<string name="LOGIN_OR_REGISTER">Einloggen/Registieren</string>
+	<string name="LOGIN_OR_REGISTER">Bild tippen, um ein zu loggen</string>
 	<string name="MENU_ABOUT">Über uns</string>
 	<string name="CURRENT_VERSION">Aktuelle Version:</string>
 	<string name="navigation_drawer_open">Offene Navigation Schublade</string>
@@ -25,5 +25,13 @@
 	<string name="FORUM_TOPIC_COUNT">Themen:</string>
 	<string name="FORUM_REPLY_FAILED">Antworten nicht erfolgreich!</string>
 	<string name="FORUM_REPLY_SUCCESS">Antworten erfolgreich!</string>
+	<string name="FORUM_PLEASE_LOGIN">Bitte anmelden vor dem Antworten!</string>
+	<string name="HINT_PASSWORD">Passwort eingeben</string>
+	<string name="HINT_USERNAME">Benutzername eingeben</string>
+	<string name="LOGIN">Einloggen</string>
+	<string name="FORUM_HINT_REPLY">     Schreiben Ihre Antwort hier</string>
+	<string name="REMEMBERME">Angemeldet bleiben</string>
+	<string name="LOGOUT">Ausloggen</string>
+	<string name="LOGOUT_SUCCESS">Ausgeloggt!</string>
 
 </resources>

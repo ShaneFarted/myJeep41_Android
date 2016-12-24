@@ -78,7 +78,7 @@ public class ReadPostActivity extends AppCompatActivity{
                     replyPost(Userapp.getUser().getUserid());
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "请先登录后回复", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), context.getString(R.string.FORUM_PLEASE_LOGIN), Toast.LENGTH_SHORT).show();
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }

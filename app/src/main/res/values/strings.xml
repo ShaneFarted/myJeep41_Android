@@ -16,12 +16,18 @@
     <string name="NO_DATA">没有更多数据</string>
 
     <!-- user info -->
-    <string name="LOGIN_OR_REGISTER">登陆/注册</string>
+    <string name="LOGIN_OR_REGISTER">点击头像登录</string>
 
     <!-- menu -->
     <string name="MENU_ABOUT">关于</string>
     <!-- login -->
+    <string name="LOGIN">登 录</string>
+    <string name="LOGOUT">注销登录</string>
+    <string name="REMEMBERME">记住我</string>
     <string name="LOGIN_INVALID">用户名/密码信息无效！</string>
+    <string name="HINT_USERNAME">输入用户名</string>
+    <string name="HINT_PASSWORD">输入密码</string>
+    <string name="LOGOUT_SUCCESS">已注销</string>
 
     <!-- about us-->
     <string name="CURRENT_VERSION">当前版本：</string>
@@ -36,4 +42,6 @@
     <string name="FORUM_SEND_REPLY">发送</string>
     <string name="FORUM_REPLY_SUCCESS">回复成功！</string>
     <string name="FORUM_REPLY_FAILED">回复失败！</string>
+    <string name="FORUM_PLEASE_LOGIN">请登录后再回复！</string>
+    <string name="FORUM_HINT_REPLY">     请在此回复</string>
 </resources>

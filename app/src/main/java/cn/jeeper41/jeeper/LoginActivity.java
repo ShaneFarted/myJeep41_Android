@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -102,8 +103,9 @@ public class LoginActivity extends Activity implements OnClickListener{
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                if(saveLogin(s)) //退出后就没了
+                if(saveLogin(s)) {
                     finish();
+                }
             }
 
             @Override
@@ -126,13 +128,17 @@ public class LoginActivity extends Activity implements OnClickListener{
             jsonObject = new JSONObject(JSON);
             JSONArray result = jsonObject.getJSONArray("result");
             JSONObject jo = result.getJSONObject(0);
-            //SharedPreferences sp = getSharedPreferences("userprofile", Context.MODE_PRIVATE);
-            //SharedPreferences.Editor editor = sp.edit();
-            //把数据进行保存
             //如果选择了记住我则写入
-            //editor.putString("saveduserid", jo.getString("userid"));
-            //提交数据
-            //editor.commit();
+            CheckBox rememberme=(CheckBox)this.findViewById(R.id.cbRememberme);
+            if(rememberme.isChecked()) {
+                SharedPreferences sp = getSharedPreferences("userprofile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                //把数据进行保存
+                editor.putString("saveduserid", jo.getString("userid"));
+                editor.putString("saveddisplayname", jo.getString("displayname"));
+                //提交数据
+                editor.commit();
+            }
             User us=new User(jo.getString("userid"),jo.getString("displayname"));
             Toast.makeText(LoginActivity.this,"Willkommen "+us.getDisplayname(),Toast.LENGTH_LONG).show();
             Userapp=(UserApplication) getApplication();
