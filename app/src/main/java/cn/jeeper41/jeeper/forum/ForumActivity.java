@@ -32,6 +32,7 @@ public class ForumActivity extends JeeperTitleBar {
     private Context context = this;
     private List<JSONObject> forumList;
     private Handler handler;
+    private ForumAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class ForumActivity extends JeeperTitleBar {
         setTitle("myJeep41 Forum");
         forumListView = (RefreshListView) findViewById(R.id.lvForumChoose);
         forumList = new LinkedList<JSONObject>();
-        forumListView.setAdapter(new ForumAdapter(context,forumListView,forumList));
+        adapter=new ForumAdapter(context,forumListView,forumList);
+        forumListView.setAdapter(adapter);
         // disenable load more
         forumListView.setEnableLoadMore(false);
         // set onclick even
@@ -71,6 +73,7 @@ public class ForumActivity extends JeeperTitleBar {
             @Override
             public void onRefreash() {
                 loadMoreData("0");
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -105,7 +108,7 @@ public class ForumActivity extends JeeperTitleBar {
      * @param pageIndex
      */
     private void loadMoreData(final String pageIndex){
-        Log.v("linx", "loadMoreData:========================================================加载中==============");
+        //Log.v("linx", "loadMoreData:========================================================加载中==============");
         new ForumService().getForum(new ForumCallBack() {
             @Override
             public void onFormFinish(JSONArray list) {

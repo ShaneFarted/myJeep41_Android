@@ -23,5 +23,7 @@
 	<string name="FORUM_SEND_REPLY">SENDEN</string>
 	<string name="FORUM_POST_COUNT">Beiträge:</string>
 	<string name="FORUM_TOPIC_COUNT">Themen:</string>
+	<string name="FORUM_REPLY_FAILED">Antworten nicht erfolgreich!</string>
+	<string name="FORUM_REPLY_SUCCESS">Antworten erfolgreich!</string>
 
 </resources>

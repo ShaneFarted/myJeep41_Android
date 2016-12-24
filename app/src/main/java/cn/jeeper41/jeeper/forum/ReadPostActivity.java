@@ -139,13 +139,14 @@ public class ReadPostActivity extends AppCompatActivity{
             protected void onPostExecute(String s) { //s为服务器返回的值
                 super.onPostExecute(s);
                 loading.dismiss();
-                if(s.equals("1")) {
-                    Toast.makeText(context,"回复成功！",Toast.LENGTH_SHORT).show();
+                if(s.equals("")) {
+                    Toast.makeText(context,context.getString(R.string.FORUM_REPLY_SUCCESS),Toast.LENGTH_SHORT).show();
                     etReplyContent.setText("");
                     ReadPostView.refresh();
                 }
                 else
-                    Toast.makeText(context,"恢复失败！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context,context.getString(R.string.FORUM_REPLY_FAILED),Toast.LENGTH_SHORT).show();
             }
 
             @Override
