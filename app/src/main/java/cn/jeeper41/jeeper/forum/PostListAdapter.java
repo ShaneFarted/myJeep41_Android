@@ -116,7 +116,7 @@ public class PostListAdapter extends BaseAdapter{
             if(data.size() == 1) {
                 JSONObject jo = data.get(0).getJSONObject(position);
                 view.postTopic.setText(jo.getString("topicname"));
-                view.postAuthor.setText(context.getString(R.string.FORUM_AUTHOR)+jo.getString("userid"));
+                view.postAuthor.setText(context.getString(R.string.FORUM_AUTHOR)+jo.getString("displayname"));
                 view.postCommentNum.setText(context.getString(R.string.FORUM_OPENNUM)+jo.getString("postcount"));
             }
         } catch (JSONException e) {

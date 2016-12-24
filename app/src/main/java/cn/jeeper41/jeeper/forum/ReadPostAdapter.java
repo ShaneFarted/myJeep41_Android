@@ -98,7 +98,7 @@ public class ReadPostAdapter extends BaseAdapter{
             try {
                 Holder.tvMainpostAuthor.setText(objectList.get(position).getString("displayname"));
                 Holder.tvMainpostContent.setText(objectList.get(position).getString("postcontent"));
-                Holder.tvMainpostTitle.setText(objectList.get(position).getString("postdate"));
+                Holder.tvMainpostTitle.setText(objectList.get(position).getString("topicname"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

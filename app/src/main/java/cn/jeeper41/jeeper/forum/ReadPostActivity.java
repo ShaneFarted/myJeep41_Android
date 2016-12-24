@@ -126,6 +126,7 @@ public class ReadPostActivity extends AppCompatActivity{
     //post方法回复帖子
     private void replyPost(final String uid){
         final String pcontent=((EditText)findViewById(R.id.etWriteReply)).getText().toString();
+
         class Testconn extends AsyncTask<Void,Void,String> {
             ProgressDialog loading;
 
@@ -151,17 +152,23 @@ public class ReadPostActivity extends AppCompatActivity{
 
             @Override
             protected String doInBackground(Void... v) {
-                HashMap<String,String> params = new HashMap<>();
-                params.put("pcontent",pcontent);
-                params.put("userid",uid);
-                params.put("topicid",topicId);
-                RequestHandler rh = new RequestHandler();
-                String res = rh.sendPostRequest(Global.SENDREPLY_URL, params);
-                return res;
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("pcontent", pcontent);
+                    params.put("userid", uid);
+                    params.put("topicid", topicId);
+                    RequestHandler rh = new RequestHandler();
+                    String res = rh.sendPostRequest(Global.SENDREPLY_URL, params);
+                    return res;
+
             }
         }
-        Testconn test=new Testconn();
-        test.execute();
+        if (pcontent.length()<=0||pcontent.trim().isEmpty()) {
+            Toast.makeText(context,getString(R.string.FORUM_REPLY_IS_NULL),Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Testconn test = new Testconn();
+            test.execute();
+        }
     }
 
     private void loadMoreData(final String topicid){
@@ -171,6 +178,8 @@ public class ReadPostActivity extends AppCompatActivity{
                 if(list != null){
                         try {
                             postJSONList.clear();
+                            //给楼主贴放入标题
+                            list.getJSONObject(0).put("topicname",getIntent().getStringExtra("topicName"));
                             for(int i=0;i<list.length();i++) {
                                 postJSONList.add(list.getJSONObject(i));
                             }

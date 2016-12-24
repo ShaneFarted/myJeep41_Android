@@ -44,4 +44,5 @@
     <string name="FORUM_REPLY_FAILED">回复失败！</string>
     <string name="FORUM_PLEASE_LOGIN">请登录后再回复！</string>
     <string name="FORUM_HINT_REPLY">     请在此回复</string>
+    <string name="FORUM_REPLY_IS_NULL">回复内容不能为空</string>
 </resources>

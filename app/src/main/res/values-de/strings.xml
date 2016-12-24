@@ -33,5 +33,6 @@
 	<string name="REMEMBERME">Angemeldet bleiben</string>
 	<string name="LOGOUT">Ausloggen</string>
 	<string name="LOGOUT_SUCCESS">Ausgeloggt!</string>
+	<string name="FORUM_REPLY_IS_NULL">Sie haben nichts geschrieben</string>
 
 </resources>
