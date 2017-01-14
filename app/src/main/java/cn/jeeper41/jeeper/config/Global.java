@@ -7,7 +7,7 @@ package cn.jeeper41.jeeper.config;
 public class Global {
     public static String PHPTEST_URL="http://www.myjeep41.com/test.php";
     public static String BASE_SERVER_URL="http://www.jokerface.top/AppJeepServer/";
-    public static String SERVER_URL=BASE_SERVER_URL+"blog/";
+    public static String SERVER_URL="http://myjeep41.com/bloglist_init.php?page=";
     public static String DETAIL_URL=BASE_SERVER_URL+"show/";
     public static String DATABASE_URL="http://www.myjeep41.com/verbinden.php";
     public static String AUTHENTICATION_URL="http://www.myjeep41.com/login_authentication.php";

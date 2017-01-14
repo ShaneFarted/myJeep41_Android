@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            storeFile file('C:/androidCertification.jks')
-            keyAlias 'qianmingZhengshu'
-            keyPassword 'qianming666'
-            storePassword 'qianming666'
+            storeFile file('C:/androidCertification2.jks')
+            keyAlias 'Shanorino Studio'
+            keyPassword 'QianMing666'
+            storePassword 'QianMing666'
         }
     }
     compileSdkVersion 23
@@ -15,8 +15,8 @@ android {
         applicationId "cn.jeeper41.jeeper"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 1
-        versionName "0.0.1"
+        versionCode 2
+        versionName "0.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,7 +34,11 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.google.firebase:firebase-core:9.8.0'
+    testCompile 'junit:junit:4.12'
 }
+
+
+apply plugin: 'com.google.gms.google-services'
